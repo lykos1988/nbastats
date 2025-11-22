@@ -1,293 +1,293 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NBA Stats</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #eef2f3;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    th {
-      background: #007bff;
-      color: white;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #ddd;
-      text-align: center;
-    }
-    select, input, button {
-      padding: 10px;
-      margin: 5px 0;
-      width: 100%;
-      border: 1px solid #aaa;
-      border-radius: 6px;
-      font-size: 16px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    .export-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .export-buttons button {
-      flex: 1;
-    }
-    @media (max-width: 480px) {
-      body { padding: 10px; }
-      .container { padding: 15px; }
-      table { font-size: 14px; }
-      input, select, button { font-size: 14px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBA Stats</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #eef2f3;
+}
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  max-width: 700px;
+  margin: 20px auto;
+}
+h2 { text-align: center; margin-bottom: 20px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+th {
+  background: #007bff;
+  color: white;
+}
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+select, input, button {
+  padding: 10px;
+  margin: 5px 0;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 16px;
+}
+button {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+button:hover { background: #0056b3; }
+.export-buttons { display: flex; gap: 10px; margin-top: 10px; }
+.export-buttons button { flex: 1; }
+@media (max-width: 480px) {
+  body { padding: 10px; }
+  .container { padding: 15px; }
+  table { font-size: 14px; }
+  input, select, button { font-size: 14px; }
+}
+</style>
 </head>
-
 <body>
 
-  <div class="container">
-    <h2>Καταχώρηση Στατιστικών</h2>
+<div class="container">
+  <h2>Καταχώρηση Στατιστικών</h2>
 
-    <input type="text" id="playerName" placeholder="Όνομα Παίκτη" />
-    <input type="date" id="date" />
-    <input type="number" id="points" placeholder="Πόντοι" />
-    <input type="number" id="rebounds" placeholder="Ριμπάουντ" />
-    <input type="number" id="assists" placeholder="Ασίστ" />
+  <select id="teamSelect">
+    <option value="">-- Επιλογή Ομάδας --</option>
+    <option>Atlanta Hawks</option>
+    <option>Boston Celtics</option>
+    <option>Brooklyn Nets</option>
+    <option>Charlotte Hornets</option>
+    <option>Chicago Bulls</option>
+    <option>Cleveland Cavaliers</option>
+    <option>Dallas Mavericks</option>
+    <option>Denver Nuggets</option>
+    <option>Detroit Pistons</option>
+    <option>Golden State Warriors</option>
+    <option>Houston Rockets</option>
+    <option>Indiana Pacers</option>
+    <option>LA Clippers</option>
+    <option>Los Angeles Lakers</option>
+    <option>Memphis Grizzlies</option>
+    <option>Miami Heat</option>
+    <option>Milwaukee Bucks</option>
+    <option>Minnesota Timberwolves</option>
+    <option>New Orleans Pelicans</option>
+    <option>New York Knicks</option>
+    <option>Oklahoma City Thunder</option>
+    <option>Orlando Magic</option>
+    <option>Philadelphia 76ers</option>
+    <option>Phoenix Suns</option>
+    <option>Portland Trail Blazers</option>
+    <option>Sacramento Kings</option>
+    <option>San Antonio Spurs</option>
+    <option>Toronto Raptors</option>
+    <option>Utah Jazz</option>
+    <option>Washington Wizards</option>
+  </select>
 
-    <button onclick="addRecord()">Καταχώρηση</button>
+  <input type="text" id="playerName" placeholder="Όνομα Παίκτη" />
+  <input type="date" id="date" />
+  <input type="number" id="points" placeholder="Πόντοι" />
+  <input type="number" id="rebounds" placeholder="Ριμπάουντ" />
+  <input type="number" id="assists" placeholder="Ασίστ" />
+
+  <button onclick="addRecord()">Καταχώρηση</button>
+</div>
+
+<div class="container">
+  <h2>Προβολή Στατιστικών</h2>
+
+  <select id="teamFilter" onchange="updatePlayerSelect()">
+    <option value="">-- Όλες οι Ομάδες --</option>
+    <option>Atlanta Hawks</option>
+    <option>Boston Celtics</option>
+    <option>Brooklyn Nets</option>
+    <option>Charlotte Hornets</option>
+    <option>Chicago Bulls</option>
+    <option>Cleveland Cavaliers</option>
+    <option>Dallas Mavericks</option>
+    <option>Denver Nuggets</option>
+    <option>Detroit Pistons</option>
+    <option>Golden State Warriors</option>
+    <option>Houston Rockets</option>
+    <option>Indiana Pacers</option>
+    <option>LA Clippers</option>
+    <option>Los Angeles Lakers</option>
+    <option>Memphis Grizzlies</option>
+    <option>Miami Heat</option>
+    <option>Milwaukee Bucks</option>
+    <option>Minnesota Timberwolves</option>
+    <option>New Orleans Pelicans</option>
+    <option>New York Knicks</option>
+    <option>Oklahoma City Thunder</option>
+    <option>Orlando Magic</option>
+    <option>Philadelphia 76ers</option>
+    <option>Phoenix Suns</option>
+    <option>Portland Trail Blazers</option>
+    <option>Sacramento Kings</option>
+    <option>San Antonio Spurs</option>
+    <option>Toronto Raptors</option>
+    <option>Utah Jazz</option>
+    <option>Washington Wizards</option>
+  </select>
+
+  <select id="playerSelect" onchange="showPlayerData()"></select>
+
+  <table id="statsTable">
+    <thead>
+      <tr>
+        <th>Ημερομηνία</th>
+        <th>Ομάδα</th>
+        <th>Πόντοι</th>
+        <th>Ριμπάουντ</th>
+        <th>Ασίστ</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h3 id="averages"></h3>
+
+  <div class="export-buttons">
+    <button onclick="exportExcel()">Export Excel</button>
+    <button onclick="exportPDF()">Export PDF</button>
   </div>
 
-  <div class="container">
-    <h2>Προβολή Στατιστικών</h2>
-
-    <select id="playerSelect" onchange="showPlayerData()"></select>
-
-    <table id="statsTable">
-      <thead>
-        <tr>
-          <th>Ημερομηνία</th>
-          <th>Πόντοι</th>
-          <th>Ριμπάουντ</th>
-          <th>Ασίστ</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <h3 id="averages"></h3>
-
-    <div class="export-buttons">
-      <button onclick="exportExcel()">Export Excel</button>
-      <button onclick="exportPDF()">Export PDF</button>
-    </div>
-
-    <button style="background:#dc3545; margin:20px auto; display:block;" onclick="clearPlayer()">
-      Διαγραφή Όλων για τον Παίκτη
-    </button>
-
-  </div>
+  <button style="background:#dc3545; margin:20px auto; display:block; max-width:600px;" onclick="clearPlayer()">Διαγραφή Όλων για τον Παίκτη</button>
+</div>
 
 <script>
-  // ------------------------
-  // DOM Elements
-  // ------------------------
-  const playerName = document.getElementById("playerName");
-  const dateEl = document.getElementById("date");
-  const points = document.getElementById("points");
-  const rebounds = document.getElementById("rebounds");
-  const assists = document.getElementById("assists");
-  const playerSelect = document.getElementById("playerSelect");
-  const averages = document.getElementById("averages");
+let records = JSON.parse(localStorage.getItem("nbaRecords") || "[]");
+const playerSelect = document.getElementById("playerSelect");
+const teamFilter = document.getElementById("teamFilter");
+const playerName = document.getElementById("playerName");
+const teamSelect = document.getElementById("teamSelect");
+const points = document.getElementById("points");
+const rebounds = document.getElementById("rebounds");
+const assists = document.getElementById("assists");
+const averages = document.getElementById("averages");
 
-  // Load records
-  let records = JSON.parse(localStorage.getItem("nbaRecords") || "[]");
+updatePlayerSelect();
+
+function saveLocal() {
+  localStorage.setItem("nbaRecords", JSON.stringify(records));
+}
+
+function addRecord() {
+  const name = playerName.value.trim();
+  const team = teamSelect.value;
+  const dateVal = document.getElementById('date').value;
+  const p = Number(points.value);
+  const r = Number(rebounds.value);
+  const a = Number(assists.value);
+
+  if (!name || !team || !dateVal) return alert('Συμπλήρωσε όνομα, ομάδα και ημερομηνία');
+
+  records.push({ name, team, date: dateVal, points: p, rebounds: r, assists: a });
+  saveLocal();
   updatePlayerSelect();
 
+  playerName.value = "";
+  teamSelect.value = "";
+  document.getElementById('date').value = "";
+  points.value = rebounds.value = assists.value = "";
+}
 
-  // ------------------------
-  // Save LocalStorage
-  // ------------------------
-  function saveLocal() {
-    localStorage.setItem("nbaRecords", JSON.stringify(records));
+function updatePlayerSelect() {
+  const filterTeam = teamFilter.value;
+  let filteredRecords = filterTeam ? records.filter(r => r.team === filterTeam) : records;
+  const players = [...new Set(filteredRecords.map(r => `${r.name} (${r.team})`))];
+
+  playerSelect.innerHTML = '<option value="">-- Επιλογή --</option>';
+  players.forEach(p => playerSelect.innerHTML += `<option>${p}</option>`);
+  showPlayerData(); // Ενημέρωση πίνακα αν έχει επιλεγμένο παίκτη
+}
+
+function showPlayerData() {
+  const selected = playerSelect.value;
+  const tbody = document.querySelector('#statsTable tbody');
+  tbody.innerHTML = '';
+  if (!selected) {
+    averages.textContent = '';
+    return;
   }
 
+  const match = selected.match(/^(.+) \((.+)\)$/);
+  if (!match) return;
 
-  // ------------------------
-  // ADD NEW RECORD
-  // ------------------------
-  function addRecord() {
-    const name = playerName.value.trim();
-    const date = dateEl.value;
-    const p = Number(points.value);
-    const r = Number(rebounds.value);
-    const a = Number(assists.value);
+  const [_, name, team] = match;
+  const filtered = records.filter(r => r.name === name && r.team === team);
 
-    if (!name || !date) {
-      alert("Συμπλήρωσε όνομα και ημερομηνία!");
-      return;
-    }
+  let sumP = 0, sumR = 0, sumA = 0;
 
-    records.push({ name, date, points: p, rebounds: r, assists: a });
+  filtered.forEach(r => {
+    tbody.innerHTML += `<tr>
+      <td>${r.date}</td>
+      <td>${r.team}</td>
+      <td>${r.points}</td>
+      <td>${r.rebounds}</td>
+      <td>${r.assists}</td>
+    </tr>`;
+    sumP += r.points; sumR += r.rebounds; sumA += r.assists;
+  });
 
-    saveLocal();
-    updatePlayerSelect();
+  averages.textContent = `Μέσος Όρος → Πόντοι: ${(sumP/filtered.length).toFixed(1)}, Ριμπάουντ: ${(sumR/filtered.length).toFixed(1)}, Ασίστ: ${(sumA/filtered.length).toFixed(1)}`;
+}
 
-    // Reset fields
-    playerName.value = "";
-    dateEl.value = "";
-    points.value = "";
-    rebounds.value = "";
-    assists.value = "";
+function clearPlayer() {
+  const selected = playerSelect.value;
+  if (!selected) return alert('Επίλεξε παίκτη');
+  if (!confirm('Να διαγραφούν όλα τα δεδομένα για τον παίκτη;')) return;
 
-    if (playerSelect.value === name) showPlayerData();
-  }
+  const match = selected.match(/^(.+) \((.+)\)$/);
+  if (!match) return;
+  const [_, name, team] = match;
 
+  records = records.filter(r => !(r.name === name && r.team === team));
+  saveLocal();
+  updatePlayerSelect();
+  document.querySelector('#statsTable tbody').innerHTML = '';
+  averages.textContent = '';
+}
 
-  // ------------------------
-  // UPDATE PLAYER SELECT
-  // ------------------------
-  function updatePlayerSelect() {
-    const players = [...new Set(records.map(r => r.name))];
+function exportExcel() {
+  let csv = "Ημερομηνία,Ομάδα,Πόντοι,Ριμπάουντ,Ασίστ\n";
+  document.querySelectorAll('#statsTable tbody tr').forEach(row => {
+    let cols = [...row.children].map(td => td.innerText);
+    csv += cols.join(',') + "\n";
+  });
 
-    playerSelect.innerHTML = '<option value="">-- Επιλογή --</option>';
+  let blob = new Blob([csv], { type: 'text/csv' });
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement('a');
+  a.href = url;
+  a.download = 'stats.csv';
+  a.click();
+}
 
-    players.forEach(p => {
-      const opt = document.createElement("option");
-      opt.value = p;
-      opt.textContent = p;
-      playerSelect.appendChild(opt);
-    });
-  }
-
-
-  // ------------------------
-  // SHOW PLAYER DATA
-  // ------------------------
-  function showPlayerData() {
-    const player = playerSelect.value;
-    const tbody = document.querySelector("#statsTable tbody");
-
-    tbody.innerHTML = "";
-    averages.textContent = "";
-
-    if (!player) return;
-
-    const filtered = records.filter(r => r.name === player);
-
-    let sumP = 0, sumR = 0, sumA = 0;
-
-    filtered.forEach(r => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${r.date}</td>
-        <td>${r.points}</td>
-        <td>${r.rebounds}</td>
-        <td>${r.assists}</td>
-      `;
-      tbody.appendChild(tr);
-
-      sumP += r.points;
-      sumR += r.rebounds;
-      sumA += r.assists;
-    });
-
-    averages.textContent =
-      `Μέσος Όρος → Πόντοι: ${(sumP/filtered.length).toFixed(1)}, Ριμπάουντ: ${(sumR/filtered.length).toFixed(1)}, Ασίστ: ${(sumA/filtered.length).toFixed(1)}`;
-  }
-
-
-  // ------------------------
-  // EXPORT EXCEL
-  // ------------------------
-  function exportExcel() {
-    let csv = "Ημερομηνία,Πόντοι,Ριμπάουντ,Ασίστ\n";
-
-    document.querySelectorAll("#statsTable tbody tr").forEach(row => {
-      let cols = [...row.children].map(td => td.innerText);
-      csv += cols.join(",") + "\n";
-    });
-
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "stats.csv";
-    a.click();
-  }
-
-
-  // ------------------------
-  // CLEAR PLAYER DATA
-  // ------------------------
-  function clearPlayer() {
-    const player = playerSelect.value;
-    if (!player) return alert("Επίλεξε παίκτη!");
-
-    if (!confirm("Να διαγραφούν όλα τα δεδομένα για τον παίκτη;")) return;
-
-    records = records.filter(r => r.name !== player);
-
-    saveLocal();
-    updatePlayerSelect();
-
-    document.querySelector("#statsTable tbody").innerHTML = "";
-    averages.textContent = "";
-  }
-
-
-  // ------------------------
-  // EXPORT PDF
-  // ------------------------
-  function exportPDF() {
-    const html = document.querySelector("#statsTable").outerHTML;
-    const avg = averages.outerHTML;
-
-    const win = window.open("", "", "width=800,height=600");
-    win.document.write(`
-      <html><body>
-        <h2>Στατιστικά Παίκτη</h2>
-        ${html}
-        ${avg}
-      </body></html>
-    `);
-    win.print();
-    win.close();
-  }
-
+function exportPDF() {
+  const html = document.querySelector('#statsTable').outerHTML;
+  let win = window.open('', '', 'width=800,height=600');
+  win.document.write(`<html><head><title>NBA Stats</title></head><body>${html}</body></html>`);
+  win.print();
+  win.close();
+}
 </script>
-
 </body>
 </html>
