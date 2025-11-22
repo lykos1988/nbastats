@@ -1,8 +1,10 @@
-<!DOCTYPE html><html lang="el">
+<!DOCTYPE html>
+<html lang="el">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NBA Stats</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -72,113 +74,220 @@
     }
   </style>
 </head>
-<body>  <div class="container">
-    <h2>Καταχώρηση Στατιστικών</h2><input type="text" id="playerName" placeholder="Όνομα Παίκτη" />
-<input type="date" id="date" />
-<input type="number" id="points" placeholder="Πόντοι" />
-<input type="number" id="rebounds" placeholder="Ριμπάουντ" />
-<input type="number" id="assists" placeholder="Ασίστ" />
 
-<button onclick="addRecord()">Καταχώρηση</button>
+<body>
 
-  </div>  <div class="container">
+  <div class="container">
+    <h2>Καταχώρηση Στατιστικών</h2>
+
+    <input type="text" id="playerName" placeholder="Όνομα Παίκτη" />
+    <input type="date" id="date" />
+    <input type="number" id="points" placeholder="Πόντοι" />
+    <input type="number" id="rebounds" placeholder="Ριμπάουντ" />
+    <input type="number" id="assists" placeholder="Ασίστ" />
+
+    <button onclick="addRecord()">Καταχώρηση</button>
+  </div>
+
+  <div class="container">
     <h2>Προβολή Στατιστικών</h2>
-    <select id="playerSelect" onchange="showPlayerData()"></select><table id="statsTable">
-  <thead>
-    <tr>
-      <th>Ημερομηνία</th>
-      <th>Πόντοι</th>
-      <th>Ριμπάουντ</th>
-      <th>Ασίστ</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
 
-<h3 id="averages"></h3>
+    <select id="playerSelect" onchange="showPlayerData()"></select>
 
-<div class="export-buttons">
-  <button onclick="exportExcel()">Export Excel</button>
-  <button onclick="exportPDF()">Export PDF</button>
-</div>
+    <table id="statsTable">
+      <thead>
+        <tr>
+          <th>Ημερομηνία</th>
+          <th>Πόντοι</th>
+          <th>Ριμπάουντ</th>
+          <th>Ασίστ</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  </div><script>
+    <h3 id="averages"></h3>
+
+    <div class="export-buttons">
+      <button onclick="exportExcel()">Export Excel</button>
+      <button onclick="exportPDF()">Export PDF</button>
+    </div>
+
+    <button style="background:#dc3545; margin:20px auto; display:block;" onclick="clearPlayer()">
+      Διαγραφή Όλων για τον Παίκτη
+    </button>
+
+  </div>
+
+<script>
+  // ------------------------
+  // DOM Elements
+  // ------------------------
+  const playerName = document.getElementById("playerName");
+  const dateEl = document.getElementById("date");
+  const points = document.getElementById("points");
+  const rebounds = document.getElementById("rebounds");
+  const assists = document.getElementById("assists");
+  const playerSelect = document.getElementById("playerSelect");
+  const averages = document.getElementById("averages");
+
+  // Load records
   let records = JSON.parse(localStorage.getItem("nbaRecords") || "[]");
   updatePlayerSelect();
 
+
+  // ------------------------
+  // Save LocalStorage
+  // ------------------------
   function saveLocal() {
     localStorage.setItem("nbaRecords", JSON.stringify(records));
   }
 
+
+  // ------------------------
+  // ADD NEW RECORD
+  // ------------------------
   function addRecord() {
     const name = playerName.value.trim();
-    const date = document.getElementById('date').value;
+    const date = dateEl.value;
     const p = Number(points.value);
     const r = Number(rebounds.value);
     const a = Number(assists.value);
 
-    if (!name || !date) return alert('Συμπλήρωσε όνομα και ημερομηνία');
+    if (!name || !date) {
+      alert("Συμπλήρωσε όνομα και ημερομηνία!");
+      return;
+    }
 
-    records.push({ name, date, points:p, rebounds:r, assists:a });
+    records.push({ name, date, points: p, rebounds: r, assists: a });
+
     saveLocal();
     updatePlayerSelect();
 
-    playerName.value = date.value = points.value = rebounds.value = assists.value = "";
+    // Reset fields
+    playerName.value = "";
+    dateEl.value = "";
+    points.value = "";
+    rebounds.value = "";
+    assists.value = "";
+
+    if (playerSelect.value === name) showPlayerData();
   }
 
+
+  // ------------------------
+  // UPDATE PLAYER SELECT
+  // ------------------------
   function updatePlayerSelect() {
-    const select = playerSelect;
     const players = [...new Set(records.map(r => r.name))];
-    select.innerHTML = '<option value="">-- Επιλογή --</option>';
-    players.forEach(p => select.innerHTML += `<option>${p}</option>`);
+
+    playerSelect.innerHTML = '<option value="">-- Επιλογή --</option>';
+
+    players.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p;
+      opt.textContent = p;
+      playerSelect.appendChild(opt);
+    });
   }
 
+
+  // ------------------------
+  // SHOW PLAYER DATA
+  // ------------------------
   function showPlayerData() {
     const player = playerSelect.value;
-    const tbody = document.querySelector('#statsTable tbody');
-    tbody.innerHTML = '';
+    const tbody = document.querySelector("#statsTable tbody");
+
+    tbody.innerHTML = "";
+    averages.textContent = "";
+
     if (!player) return;
 
     const filtered = records.filter(r => r.name === player);
 
-    let sumP=0, sumR=0, sumA=0;
+    let sumP = 0, sumR = 0, sumA = 0;
 
     filtered.forEach(r => {
-      tbody.innerHTML += `<tr>
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
         <td>${r.date}</td>
         <td>${r.points}</td>
         <td>${r.rebounds}</td>
         <td>${r.assists}</td>
-      </tr>`;
-      sumP+=r.points; sumR+=r.rebounds; sumA+=r.assists;
+      `;
+      tbody.appendChild(tr);
+
+      sumP += r.points;
+      sumR += r.rebounds;
+      sumA += r.assists;
     });
 
-    averages.textContent = `Μέσος Όρος → Πόντοι: ${(sumP/filtered.length).toFixed(1)}, Ριμπάουντ: ${(sumR/filtered.length).toFixed(1)}, Ασίστ: ${(sumA/filtered.length).toFixed(1)}`;
+    averages.textContent =
+      `Μέσος Όρος → Πόντοι: ${(sumP/filtered.length).toFixed(1)}, Ριμπάουντ: ${(sumR/filtered.length).toFixed(1)}, Ασίστ: ${(sumA/filtered.length).toFixed(1)}`;
   }
 
+
+  // ------------------------
+  // EXPORT EXCEL
+  // ------------------------
   function exportExcel() {
-    let csv = "Ημερομηνία,Πόντοι,Ριμπάουντ,Ασίστ
-";
-    document.querySelectorAll('#statsTable tbody tr').forEach(row => {
+    let csv = "Ημερομηνία,Πόντοι,Ριμπάουντ,Ασίστ\n";
+
+    document.querySelectorAll("#statsTable tbody tr").forEach(row => {
       let cols = [...row.children].map(td => td.innerText);
-      csv += cols.join(',') + "
-";
+      csv += cols.join(",") + "\n";
     });
 
-    let blob = new Blob([csv], { type: 'text/csv' });
-    let url = URL.createObjectURL(blob);
-    let a = document.createElement('a');
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'stats.csv';
+    a.download = "stats.csv";
     a.click();
   }
 
+
+  // ------------------------
+  // CLEAR PLAYER DATA
+  // ------------------------
+  function clearPlayer() {
+    const player = playerSelect.value;
+    if (!player) return alert("Επίλεξε παίκτη!");
+
+    if (!confirm("Να διαγραφούν όλα τα δεδομένα για τον παίκτη;")) return;
+
+    records = records.filter(r => r.name !== player);
+
+    saveLocal();
+    updatePlayerSelect();
+
+    document.querySelector("#statsTable tbody").innerHTML = "";
+    averages.textContent = "";
+  }
+
+
+  // ------------------------
+  // EXPORT PDF
+  // ------------------------
   function exportPDF() {
-    const html = document.querySelector('#statsTable').outerHTML;
-    let win = window.open('', '', 'width=800,height=600');
-    win.document.write(`<html><body>${html}</body></html>`);
+    const html = document.querySelector("#statsTable").outerHTML;
+    const avg = averages.outerHTML;
+
+    const win = window.open("", "", "width=800,height=600");
+    win.document.write(`
+      <html><body>
+        <h2>Στατιστικά Παίκτη</h2>
+        ${html}
+        ${avg}
+      </body></html>
+    `);
     win.print();
     win.close();
   }
-</script></body>
+
+</script>
+
+</body>
 </html>
